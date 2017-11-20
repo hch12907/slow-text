@@ -6,50 +6,47 @@ namespace SlowText
     class SlowText
     {
         Timer timer;
-        public string text { get; private set; }
-        public int interval { get; private set; }
-        public int wait { get; private set; }
+        public string Text { get; private set; }
+        public int Interval { get; private set; }
+        public int Wait { get; private set; }
 
         private int counter;
 
         /// <summary>
         /// The constructor of SlowText. The first param is the text you
-        /// want to show slowly, the second param is the interval between
-        /// each char, the third param is how long SlowText waits after
-        /// finishing its job.
+        /// want to print slowly, the second param is the time interval
+        /// between each char, the third param is how long SlowText waits
+        /// after finishing its job.
         /// </summary>
         /// <param name="Text"></param>
         /// <param name="Interval"></param>
         /// <param name="Wait"></param>
         public SlowText(string text, int interval = 1000, int wait = 0)
         {
-            this.text = text;
-            this.interval = interval;
-            this.wait = wait;
+            this.Text = text;
+            this.Interval = interval;
+            this.Wait = wait;
         }
 
         /// <summary>
-        /// The method to start SlowText.
+        /// Start SlowText.
         /// </summary>
         public void Start()
         {
             timer = new Timer();
-            timer.Interval = interval;
-            timer.Elapsed += (x, y) => { UpdateString(); };
+            timer.Interval = Interval;
+            timer.Elapsed += (x, y) => { Print(); };
             timer.Start();
             Sleep();
         }
 
         /// <summary>
-        /// It actually doesn't update the string, but
-        /// instead print it. It actually updates another string 
-        /// in the original code. Oh well, I was too lazy to change
-        /// the name to another name that makes sense. ¯\_(ツ)_/¯
+        /// Prints the text slowly.
         /// </summary>
-        void UpdateString()
+        void Print()
         {
-            if(text.Length > counter)
-                PrintText(text[counter++]);
+            if(Text.Length > counter)
+                PrintText(Text[counter++]);
             else
                 timer.Stop();
         }
@@ -60,7 +57,7 @@ namespace SlowText
         /// </summary>
         public virtual void Sleep()
         {
-            System.Threading.Thread.Sleep(interval * text.Length + wait);
+            System.Threading.Thread.Sleep(Interval * Text.Length + Wait);
         }
 
         /// <summary>
